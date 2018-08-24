@@ -14,20 +14,6 @@ def check_color(px, my_range, my_list):
 
   return None
 
-def contrast(gray, my_range):
-  ranges = range_list(my_range)
-
-  for i in range(0, len(gray)):
-    for j in range(0, len(gray[i])):
-
-      for k in range(0, len(ranges)):
-        new_color = check_color(gray[i][j], my_range, ranges[k])
-        if (new_color):
-          gray[i][j] = new_color
-          break
-
-  return gray
-
 def apply(gray, my_range):
   ranges = range_list(my_range)
 
