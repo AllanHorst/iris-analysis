@@ -3,20 +3,13 @@ import cv2
 import contrast
 import divider
 import analysis
+import pupil_finder
 
-img = cv2.imread('images/with_diabetes/4dsim.png')
-# img = cv2.resize(img, (720, 576))
-img = cv2.resize(img, (360, 288))
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+img = cv2.imread('images/with_diabetes/4dsim.png', 0)
+center_x, center_y = pupil_finder.find(img)
+cv2.circle(img, (center_x, center_y), 2, (0, 0, 255), 3)
 
-gray = contrast.apply(gray, 16)
-imgs, img = divider.apply(gray)
-cv2.imshow('img2', gray)
-cv2.imshow('img', imgs[5])
-# for i in range(0, len(imgs)):
-#   cv2.imshow('img'+str(i), imgs[i])
+cv2.imshow('detected circles', img)
 
-analysis.apply(imgs[5])
-np.savetxt('text1.txt',imgs[5],fmt='%.2f')
 cv2.waitKey(0)
 cv2.destroyAllWindows()
