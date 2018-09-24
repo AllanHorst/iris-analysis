@@ -12,5 +12,4 @@ def find(img):
     return None
 
   circles = np.uint16(np.around(circles))
-  i = circles[0][0]
-  return i[0], i[1]
+  return circles[0][0]
