@@ -1,7 +1,6 @@
 import numpy as np
 import cv2
 import contrast
-import divider
 import analysis
 import pupil_finder
 import normalize
