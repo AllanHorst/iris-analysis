@@ -1,4 +1,5 @@
 import cv2
+import divider
 import numpy as np
 
 def find(img):
@@ -12,4 +13,13 @@ def find(img):
     return None
 
   circles = np.uint16(np.around(circles))
-  return circles[0][0]
+  center = circles[0][0]
+  x = center[0]
+  r = center[2] * 3
+  y = center[1]
+
+  crop_img = img[y-r:y+r, x-r:x+r]
+  cv2.resize(crop_img, (360, 288))
+
+  imgs, img2 = divider.apply(crop_img)
+  return imgs
