@@ -8,7 +8,7 @@ def find(img):
 
   circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, 100,
                               param1=50, param2=30, minRadius=0, maxRadius=50)
-
+  # print(len(circles[0]))
   if (circles is None or len(circles[0]) > 1):
     return None
 
@@ -19,7 +19,8 @@ def find(img):
   y = center[1]
 
   crop_img = img[y-r:y+r, x-r:x+r]
-  cv2.resize(crop_img, (360, 288))
+  cv2.resize(crop_img, (180, 180))
 
   imgs, img2 = divider.apply(crop_img)
+  print(len(imgs))
   return imgs

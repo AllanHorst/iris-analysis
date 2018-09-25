@@ -8,7 +8,6 @@ def range_list(list_size, my_range):
 
 def apply(img):
   size = 2
-  print(size)
 
   width = img.shape[1]
   heigth = img.shape[0]
