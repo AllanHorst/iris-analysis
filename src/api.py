@@ -3,6 +3,8 @@ import names
 import json
 import cv2
 import numpy as np
+from process_image import process
+
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -14,7 +16,7 @@ def analyze():
   nparr = np.fromstring(r.data, np.uint8)
   # decode image
   img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-  print(img)
+  process(img)
   return "show"
 
 app.run()
