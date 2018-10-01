@@ -1,46 +1,23 @@
-import numpy
+import numpy as np
 import cv2
+import contrast
 
-colors = {}
-predominant = None
-image = None
+def analyze(img):
+  print(img)
+  th3 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
+            cv2.THRESH_BINARY, 31,2)
+  # contrast.apply(img, 8)
+  hist = cv2.calcHist([img],[0],None,[256],[0,255])
 
-def add_predominant(pixel):
-  global predominant
-  count = colors[str(pixel)]
+  blank = np.zeros((256, 256))
 
-  if (predominant != None and predominant['pixel'] == pixel):
-    predominant['count'] = count
-    return
+  for x,y in enumerate(hist):
+    print(x, y)
+    cv2.line(blank, (x, 0), (x, y), (255, 255, 255))
 
-  if (predominant == None or predominant['count'] < count ):
-    predominant = {
-      'pixel': pixel,
-      'count': count
-    }
+  cv2.imshow('a', blank)
 
-def add_color(pixel):
-  global colors
-  count = colors[str(pixel)] if str(pixel) in colors else 0
-  colors[str(pixel)] = count + 1
-
-def process(i, j):
-  pixel = image[i][j]
-  add_color(pixel)
-  add_predominant(pixel)
-
-def apply(img):
-  global image
-  image = img
-  print(len(img))
-  print(len(img[0]))
-  soma = 0
-  for i in range(0, len(img)):
-    for j in range(0, len(img[i])):
-      process(i, j)
-      soma += 1
-
-  print(soma)
-  print(colors)
-  print('*' * 50)
-  print(predominant)
+  cv2.imshow('or', img)
+  # cv2.imshow('img', th3)
+  cv2.waitKey(0)
+  cv2.destroyAllWindows()

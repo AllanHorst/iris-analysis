@@ -22,5 +22,4 @@ def find(img):
   cv2.resize(crop_img, (180, 180))
 
   imgs, img2 = divider.apply(crop_img)
-  print(len(imgs))
   return imgs
