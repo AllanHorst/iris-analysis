@@ -1,7 +1,6 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 import names
-import json
 import cv2
 import numpy as np
 from process_image import process
@@ -17,6 +16,6 @@ def analyze():
   nparr = np.fromstring(r.data, np.uint8)
   img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
   process(img)
-  return "show"
+  return jsonify({ 'result': True })
 
 app.run()
