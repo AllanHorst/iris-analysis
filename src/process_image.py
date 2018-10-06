@@ -17,4 +17,9 @@ def process(img):
 
 
 # img = cv2.imread('images/without_diabetes/3d.png', 0)
-# img = cv2.imread('images/with_diabetes/4dsim.png', 0)
+img = cv2.imread('images/with_diabetes/4dsim.png')
+# cv2.imshow('img', img)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+# img = cv2.imread('images/without_diabetes_with_background/3e.png')
+process(img)
