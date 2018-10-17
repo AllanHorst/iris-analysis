@@ -19,7 +19,7 @@ def process(img):
 
   return smudges == 4
 
-# img = cv2.imread('images/without_diabetes/3d.png')
+img = cv2.imread('images/without_diabetes/5d.png')
 img = cv2.imread('images/with_diabetes/5esim.png')
 img = cv2.imread('images/with_diabetes/4dsim.png')
 # cv2.imshow('img', img)

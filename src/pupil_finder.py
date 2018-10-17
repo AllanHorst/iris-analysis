@@ -8,7 +8,6 @@ def find(img):
 
   circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, 100,
                               param1=50, param2=30, minRadius=0, maxRadius=50)
-  # print(len(circles[0]))
   if (circles is None or len(circles[0]) > 1):
     return None
 

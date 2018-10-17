@@ -7,11 +7,6 @@ def four_pieces(imgs):
   for i in range(0, len(imgs)):
     crop = functions.get(str(i))(imgs[i])
     pieces.append(crop)
-    # cv2.imshow('dst', dst)
-    # cv2.imshow('img', imgs[i])
-    # cv2.imshow('crop', crop)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
 
   return pieces
 

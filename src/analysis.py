@@ -13,13 +13,14 @@ def draw_countour(img, cnt):
 def analyze(img):
   has_smudge = False
   th3 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
-            cv2.THRESH_BINARY_INV, 41,3)
+            cv2.THRESH_BINARY_INV, 41,5)
 
   for y in range(0, len(img)):
     for x in range(0, len(img[y])):
       if (th3[y][x] == 0):
         continue
-      if (img[y][x] < 100):
+      print(img[y][x])
+      if (img[y][x] > 150):
         th3[y][x] = 255
 
 
@@ -29,14 +30,8 @@ def analyze(img):
     area = cv2.contourArea(cnt)
     print(area)
     if (area > min_area and area < max_area):
+      draw_countour(img, cnt)
       has_smudge = True
       break
 
-
-  print(has_smudge)
   return has_smudge
-
-  # cv2.imshow('th3', th3)
-  # cv2.imshow('img', img)
-  # cv2.waitKey(0)
-  # cv2.destroyAllWindows()
