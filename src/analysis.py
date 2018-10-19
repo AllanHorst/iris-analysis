@@ -14,7 +14,8 @@ def draw_countour(img, cnt):
 def fuzzify(avarage):
   calc1 = (avarage - min_area) / (medium_area - min_area)
   calc2 = (max_area - avarage) / (max_area - medium_area)
-  return max(min(calc1, calc2), 0)
+  result = max(min(calc1, calc2), 0)
+  return result * 100
 
 def analyze(img):
   th3 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
@@ -32,7 +33,6 @@ def analyze(img):
       count += 1
       draw_countour(img, cnt)
       break
-
   avarage = sum_area / count
   return fuzzify(avarage), img
 
