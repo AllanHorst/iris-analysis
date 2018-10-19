@@ -16,6 +16,6 @@ def analyze():
   nparr = np.fromstring(r.data, np.uint8)
   img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
   result = process(img)
-  return jsonify({'result': result})
+  return jsonify(result)
 
 app.run()

@@ -10,7 +10,8 @@ def process(img):
   img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
   # img = cv2.resize(img,  (300, 300))
   imgs = pupil_finder.find(img)
-  data = {}
+  data = []
+  sum_result = 0
   if (not imgs or len(imgs) != 4):
     print('Pupil not founded')
   else:
@@ -21,14 +22,14 @@ def process(img):
       retval, buffer = cv2.imencode('.jpg', piece)
       base64_bytes = base64.b64encode(buffer)
       base64_string = base64_bytes.decode('utf-8')
-
-      print(base64_string)
-      data[str(i)] = {
-        'result': result,
+      sum_result += result
+      data.append({
+        'result': round(result, 2),
         'img': base64_string
-      }
+      })
 
-  return data
+  avarage = sum_result / 4
+  return { 'images': data, 'avarage': round(avarage, 2) }
 
 # img = cv2.imread('images/without_diabetes/5d.png')
 # img = cv2.imread('images/with_diabetes/5esim.png')
