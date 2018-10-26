@@ -21,7 +21,7 @@ def fuzzify(avarage):
   return result * 100
 
 def analyze(img):
-  print('<>' * 20)
+  print('#' * 20)
   th3 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
             cv2.THRESH_BINARY_INV, 41, 3)
 
@@ -43,9 +43,5 @@ def analyze(img):
   print('sum area: ', sum_area)
   print('fuzzy result: ', fuzzify(avarage))
   print('contours: ', len(contours))
-  cv2.imshow('image', img)
-  cv2.imshow('th3', th3)
-  cv2.waitKey(0)
-  cv2.destroyAllWindows()
   return fuzzify(avarage), img
 

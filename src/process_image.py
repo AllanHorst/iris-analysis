@@ -7,26 +7,27 @@ import pupil_finder
 import normalize
 
 def process(img):
+  print('<>' * 10, 'Beginning of Process', '<>' * 10)
   img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-  # img = cv2.resize(img,  (300, 300))
   imgs = pupil_finder.find(img)
   data = []
   sum_result = 0
   if (not imgs or len(imgs) != 4):
     print('Pupil not founded')
-  else:
-    pieces = normalize.four_pieces(imgs)
-    for i in range(0, len(pieces)):
-      result, piece = analysis.analyze(pieces[i])
+    return { 'error': 'Pupila não encontrada!'}
 
-      retval, buffer = cv2.imencode('.jpg', piece)
-      base64_bytes = base64.b64encode(buffer)
-      base64_string = base64_bytes.decode('utf-8')
-      sum_result += result
-      data.append({
-        'result': round(result, 2),
-        'img': base64_string
-      })
+  pieces = normalize.four_pieces(imgs)
+  for i in range(0, len(pieces)):
+    result, piece = analysis.analyze(pieces[i])
+
+    retval, buffer = cv2.imencode('.jpg', piece)
+    base64_bytes = base64.b64encode(buffer)
+    base64_string = base64_bytes.decode('utf-8')
+    sum_result += result
+    data.append({
+      'result': round(result, 2),
+      'img': base64_string
+    })
 
   avarage = sum_result / 4
   return { 'images': data, 'avarage': round(avarage, 2) }

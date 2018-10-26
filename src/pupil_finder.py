@@ -2,7 +2,7 @@ import cv2
 import divider
 import numpy as np
 
-def find(img):
+def find_circle(img, minRadius, maxRadius):
   img = cv2.medianBlur(img, 5)
   cimg = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
 
@@ -22,3 +22,19 @@ def find(img):
 
   imgs, img2 = divider.apply(crop_img)
   return imgs
+
+
+def find(img):
+  tries = [[0, 50], [30, 50], [30, 60]]
+  imgs_result = None
+  for i in range(0, len(tries)):
+    try:
+      imgs = find_circle(img, tries[i][0], tries[i][1])
+      if (not imgs):
+        continue
+
+      break
+    except:
+      continue
+
+  return imgs_result
