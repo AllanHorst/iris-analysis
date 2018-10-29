@@ -7,7 +7,7 @@ def find_circle(img, minRadius, maxRadius):
   cimg = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
 
   circles = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 1, 100,
-                              param1=50, param2=30, minRadius=0, maxRadius=50)
+                              param1=50, param2=30, minRadius=minRadius, maxRadius=maxRadius)
   if (circles is None or len(circles[0]) > 1):
     return None
 
@@ -32,7 +32,7 @@ def find(img):
       imgs = find_circle(img, tries[i][0], tries[i][1])
       if (not imgs):
         continue
-
+      imgs_result = imgs
       break
     except:
       continue
