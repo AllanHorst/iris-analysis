@@ -1,23 +1,47 @@
 import numpy as np
 import cv2
-import contrast
+
+min_area = 50
+max_area = 800
+a = 50
+b = 250
+c = 500
+d = 800
+
+def draw_countour(img, cnt):
+  rect = cv2.minAreaRect(cnt)
+  box = cv2.boxPoints(rect)
+  box = np.int0(box)
+  cv2.drawContours(img,[box],0,(0,0,255),1)
+
+def fuzzify(avarage):
+  calc1 = (avarage - a) / (b - a)
+  calc2 = (d - avarage) / (d - c)
+  result = max(min(calc1, 1, calc2), 0)
+  return result * 100
 
 def analyze(img):
-  print(img)
+  print('#' * 20)
   th3 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
-            cv2.THRESH_BINARY, 31,2)
-  # contrast.apply(img, 8)
-  hist = cv2.calcHist([img],[0],None,[256],[0,255])
+            cv2.THRESH_BINARY_INV, 41, 3)
 
-  blank = np.zeros((256, 256))
 
-  for x,y in enumerate(hist):
-    print(x, y)
-    cv2.line(blank, (x, 0), (x, y), (255, 255, 255))
+  im2, contours, hierarchy = cv2.findContours(th3, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+  sum_area = 0
+  count = 0
+  for i in range(0, len(contours)):
+    cnt = contours[i]
+    area = cv2.contourArea(cnt)
+    print('area: ', area)
+    if (area > min_area and area < max_area):
+      sum_area += area
+      count += 1
+      draw_countour(img, cnt)
+      break
 
-  cv2.imshow('a', blank)
+  avarage = sum_area / count
+  print('sum area: ', sum_area)
+  print('fuzzy result: ', fuzzify(avarage))
+  print('contours: ', len(contours))
+  return fuzzify(avarage), img
 
-  cv2.imshow('or', img)
-  # cv2.imshow('img', th3)
-  cv2.waitKey(0)
-  cv2.destroyAllWindows()
